@@ -1,0 +1,18 @@
+<a href="#">Increment value</a>
+
+<span>Current value: </span><span id="value"></span>
+
+<script>
+var current_val = 0;
+$(document).ready(function(){
+	$("a").click(function(){
+		current_val++;
+
+		$.get('<%= increment_counter_path %>', {value: current_val});
+
+		$("#value").html(current_val);
+
+		return false;
+	});
+});
+</script>

@@ -1,0 +1,19 @@
+<%= javascript_include_tag "#{request.protocol}#{request.host}:9292/faye/client.js" %>
+<div id="counter_log">
+</div>
+
+<script>
+var faye_client = new Faye.Client('<%= "#{request.protocol}#{request.host}:9292/faye" %>',{retry:1, timeout:30});
+faye_client.disable('websocket');
+
+faye_subscription = faye_client.subscribe('/counter', function (data) {
+	$("#counter_log").append(data.object + "<br/>");
+});
+
+faye_client.on("transport:up",function(){
+	console.log('transport is up');
+});
+faye_client.on('transport:down', function(){
+	console.log('transport is down');
+});
+</script>
